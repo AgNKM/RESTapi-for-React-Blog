@@ -10,4 +10,10 @@ router.get("/posts", feedControllers.getPost);
 ///feed/submit
 router.post("/submit", feedControllers.postForm);
 
+router.get("/myposts", (req, res, next) => {
+  res.json({
+    name: "agi",
+  });
+});
+
 module.exports = router;
