@@ -1,19 +1,24 @@
 const express = require("express");
+const { body } = require("express-validator");
 
 const router = express.Router();
 
-const feedControllers = require("../controllers/feed");
+const feedController = require("../controllers/feed");
 
 ///feed/posts
-router.get("/posts", feedControllers.getPost);
+router.get("/posts", feedController.getPosts);
 
-///feed/submit
-router.post("/submit", feedControllers.postForm);
+///feed/post/:postId
+router.get("/post/:postId", feedController.getPost);
 
-router.get("/myposts", (req, res, next) => {
-  res.json({
-    name: "agi",
-  });
-});
+///feed/post
+router.post(
+  "/post",
+  [
+    body("title").trim().isLength({ min: 5 }),
+    body("content").trim().isLength({ min: 5 }),
+  ],
+  feedController.createPost
+);
 
 module.exports = router;
